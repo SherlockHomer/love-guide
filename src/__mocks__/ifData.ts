@@ -9,6 +9,21 @@ export interface IfThenItem {
 const mockData: IfThenItem[] = [
   // 恋爱婚姻类
   {
+    if: '如果某人要异地工作',
+    then: '那么就带上对方',
+    type: 'love',
+  },
+  {
+    if: '如果出轨',
+    then: '那么就净身出户',
+    type: 'love',
+  },
+  {
+    if: '如果厌倦了对方',
+    then: '那么就告诉对方，尝试改变，不能独自承受',
+    type: 'love',
+  },
+  {
     if: '如果你爱一个人，却无法在一起',
     then: '那么就学会放手，真爱有时候是放手让对方幸福',
     type: 'love',
@@ -36,11 +51,6 @@ const mockData: IfThenItem[] = [
   {
     if: '如果你的伴侣工作太忙',
     then: '那么就学会支持和理解，但也要确保有质量的相处时间',
-    type: 'love',
-  },
-  {
-    if: '如果你们的家人不赞成你们的关系',
-    then: '那么就耐心沟通，用时间证明你们的感情',
     type: 'love',
   },
   {
@@ -194,4 +204,4 @@ const mockData: IfThenItem[] = [
   },
 ];
 
-export default mockData; 
+export default mockData;

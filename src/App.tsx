@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import './App.css';
 import mockData, { IfThenItem } from './__mocks__/ifData';
 
@@ -19,6 +19,28 @@ function App() {
   });
   // 列表容器的引用，用于检测滚动
   const listContainerRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedType, setSelectedType] = useState('all');
+
+  // Filter data based on search term and selected type
+  const filteredData = useMemo(() => {
+    return data.filter(item => {
+      const matchesSearch = item.if.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesType = selectedType === 'all' || item.type === selectedType;
+      return matchesSearch && matchesType;
+    });
+  }, [data, searchTerm, selectedType]);
+
+  // 当筛选条件变化时重置visible items
+  useEffect(() => {
+    setVisibleItems(Math.min(15, filteredData.length));
+  }, [searchTerm, selectedType, filteredData.length]);
+
+  // 加载更多数据
+  const loadMore = useCallback(() => {
+    setVisibleItems((prev) => Math.min(prev + 5, filteredData.length));
+  }, [filteredData.length]);
 
   // 从localStorage加载数据或使用mock数据
   useEffect(() => {
@@ -54,7 +76,7 @@ function App() {
         // 当滚动到距离底部100px时加载更多
         if (
           scrollHeight - scrollTop - clientHeight < 100 &&
-          visibleItems < data.length
+          visibleItems < filteredData.length
         ) {
           loadMore();
         }
@@ -71,7 +93,7 @@ function App() {
         listContainer.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [visibleItems, data.length]);
+  }, [visibleItems, filteredData.length, loadMore]);
 
   // 处理点击列表项
   const handleItemClick = (item: IfThenItem) => {
@@ -81,11 +103,6 @@ function App() {
   // 关闭弹窗
   const closePopup = () => {
     setSelectedItem(null);
-  };
-
-  // 加载更多数据
-  const loadMore = () => {
-    setVisibleItems((prev) => Math.min(prev + 5, data.length));
   };
 
   // 打开添加表单
@@ -119,25 +136,62 @@ function App() {
     }
   };
 
+  // 从数据中提取所有可用的类型选项
+  const typeOptions = useMemo(() => {
+    const types = data.map(item => item.type);
+    // 去重并排序
+    return ['all', ...Array.from(new Set(types))].sort();
+  }, [data]);
+
   return (
     <div className='container'>
       <header className='nes-container with-title'>
         <h1 className='title'>Love Guide</h1>
         <p>Tap to see answer</p>
+        
+        <div className="filter-container">
+          {/* 搜索框暂时隐藏 
+          <input 
+            type="text" 
+            className="nes-input" 
+            placeholder="Search..." 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          */}
+          
+          <div className="type-filter">
+            <select 
+              className="nes-select custom-select" 
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+            >
+              {typeOptions.map(type => (
+                <option key={type} value={type}>
+                  {type === 'all' ? 'All Types' : type.charAt(0).toUpperCase() + type.slice(1)}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
       </header>
 
       <div className='list-container nes-container' ref={listContainerRef}>
-        <ul className='nes-list is-disc'>
-          {data.slice(0, visibleItems).map((item, index) => (
-            <li
-              key={index}
-              className='list-item nes-pointer'
-              onClick={() => handleItemClick(item)}
-            >
-              {item.if}
-            </li>
-          ))}
-        </ul>
+        {filteredData.length > 0 ? (
+          <ul className='nes-list is-disc'>
+            {filteredData.slice(0, visibleItems).map((item, index) => (
+              <li
+                key={index}
+                className='list-item nes-pointer'
+                onClick={() => handleItemClick(item)}
+              >
+                {item.if}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="no-results">No matches found. Try another search.</p>
+        )}
       </div>
 
       {/* 悬浮添加按钮 */}
