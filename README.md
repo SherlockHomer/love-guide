@@ -1,54 +1,60 @@
-# React + TypeScript + Vite
+# Love Guide
+爱情指南。关爱两性生活。🤗🤗🤗🤗
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+一个复古风格的爱情指南，提供各类"如果...那么..."格式的建议。`
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+> 以下由 AI 生成
+## 功能特点
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 核心功能
+- 展示"如果...那么..."格式的生活建议和指导
+- 点击列表项查看完整答案
+- 支持按类型筛选内容（恋爱婚姻、分歧、衣食住行、运动、理财等）
+- 无限滚动加载更多内容
+- 添加自定义条目并本地保存
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 技术特点
+- 使用React + TypeScript + Vite构建
+- 采用 nes.css 实现复古像素风格UI
+- 使用 localStorage 实现数据持久化
+- 支持按需加载和性能优化
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 数据类型
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+应用包含多种类型的生活指南：
+- **恋爱婚姻** - 关于感情和关系的建议
+- **分歧处理** - 处理意见不合和冲突的方法
+- **衣食住行** - 日常生活习惯和技巧
+- **运动健身** - 体育锻炼和健康相关建议
+- **理财管钱** - 财务管理和投资建议
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 使用方法
+
+1. 浏览列表查看各种"如果..."的情境
+2. 点击感兴趣的项目查看详细建议
+3. 使用顶部的类型选择器筛选特定类别的内容
+4. 点击左下角的金币图标添加自己的建议
+5. 添加的内容会自动保存到本地，下次访问仍然可见
+
+## 开发技术
+
+- React 18
+- TypeScript
+- Vite
+- nes.css (像素风格UI框架)
+- LocalStorage API
+
+## 项目结构
+
+- `/src` - 源代码目录
+- `/src/__mocks__` - 模拟数据
+- `/public` - 静态资源
+
+## 未来计划
+
+- 添加搜索功能
+- 支持数据云同步
+- 添加更多类型的生活指南
+- 支持社区贡献和分享

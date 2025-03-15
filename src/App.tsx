@@ -19,8 +19,7 @@ function App() {
   });
   // 列表容器的引用，用于检测滚动
   const listContainerRef = useRef<HTMLDivElement>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('all');
 
   // Filter data based on search term and selected type
